@@ -54,7 +54,7 @@
         }
         /* Dynamic Background Style */
         #hub-page {
-            background-image: url('https://raw.githubusercontent.com/leejoy82/welcome-to-the-piece-hall/main/night.jpg');
+            background-image: url('https://raw.githubusercontent.com/leejoy82/welcome-to-the-piece-hall/main/Live-at-the-Piece-Hall-1.jpg');
             background-size: cover;
             background-position: center;
         }
@@ -703,6 +703,7 @@
 </script>
 </body>
 </html>
+
 
 
 
