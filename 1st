@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live at The Piece Hall</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- PWA Manifest and Theme Color -->
+    <link rel="manifest" id="manifest">
+    <meta name="theme-color" content="#000000">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/leejoy82/welcome-to-the-piece-hall/main/icon-192.png">
+
+    <!-- Google Translate API -->
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <style>
+        /* Embedded Shared Styles */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #000000;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+        .bg-sandstone-gold { background-color: #B3A369; }
+        .text-parchment { color: #F5F5DC; }
+        .text-sandstone-gold { color: #B3A369; }
+        .border-sandstone-gold { border-color: #B3A369; }
+        .content-page-header {
+            background-color: #111111;
+            border-bottom: 1px solid #B3A369;
+        }
+        /* Helper class to hide/show pages */
+        .page-section.hidden {
+            display: none;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #B3A369;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Dynamic Background Style */
+        #hub-page {
+            background-image: url('https://raw.githubusercontent.com/leejoy82/welcome-to-the-piece-hall/main/night.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        /* General page content styling */
+        .page-content {
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+        .page-content h3 {
+            font-size: 1.75rem;
+            color: #B3A369;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .page-content p {
+            margin-bottom: 1rem;
+        }
+        /* Google Translate Widget Styling */
+        #google_translate_element .goog-te-combo {
+            background-color: #111111;
+            color: #B3A369;
+            border: 1px solid #B3A369;
+            border-radius: 4px;
+            padding: 8px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .goog-te-gadget-simple {
+            background-color: transparent !important;
+            border: none !important;
+        }
+        .goog-te-gadget-simple .goog-te-menu-value span {
+            color: #B3A369 !important;
+        }
+        body > .skiptranslate {
+            display: none !important;
+        }
+        
+        /* Gig-specific styling */
+        .faq-item {
+            border-bottom: 1px solid #B3A369;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h4 {
+            font-size: 1.25rem;
+            color: #B3A369;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+        #light-show-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            transition: background-color 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="text-parchment" style="overflow-x: hidden;">
+
+    <!-- =========== HOME HUB PAGE =========== -->
+    <main id="hub-page" class="page-section min-h-screen flex flex-col items-center justify-center p-4 sm:p-6">
+        <div class="w-full max-w-md mx-auto text-center bg-black bg-opacity-70 p-6 rounded-lg">
+            <header class="mb-8 text-parchment">
+                <img src="https://www.thepiecehall.co.uk/wp-content/uploads/2021/06/ThePieceHall_Logo_white.png" alt="The Piece Hall Logo" class="h-16 w-auto mx-auto mb-6">
+                <h1 class="text-4xl md:text-5xl font-bold text-sandstone-gold" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.7);">Live at The Piece Hall</h1>
+                <p class="text-lg text-parchment/70 mt-2" id="current-date">Your Gig Guide</p>
+            </header>
+            
+            <div class="mb-6">
+                <form id="search-form" class="relative">
+                    <input type="search" id="search-input" placeholder="Search FAQs, artists, food..." class="w-full bg-gray-800 border-2 border-sandstone-gold rounded-full py-2 px-4 pl-10 text-parchment focus:ring-yellow-500 focus:border-yellow-500">
+                    <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-sandstone-gold" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </form>
+            </div>
+            
+            <div class="space-y-3">
+                 <button data-target="schedule-page" class="page-link flex items-center w-full p-3 bg-sandstone-gold text-black font-semibold rounded-lg shadow-lg transform transition-all duration-200 hover:bg-yellow-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-4"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    <span class="flex-grow text-left">Tonight's Schedule</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+                 <button data-target="lineup-page" class="page-link flex items-center w-full p-3 bg-sandstone-gold text-black font-semibold rounded-lg shadow-lg transform transition-all duration-200 hover:bg-yellow-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-4"><path d="M17 18h.01"/><path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v4"/><path d="M14 2v6h6"/><path d="M9.5 18H8a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h1.5v4Z"/><path d="M13.5 14H12a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h1.5v-4Z"/></svg>
+                    <span class="flex-grow text-left">Artist & Line-up</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+                 <button data-target="map-page" class="page-link flex items-center w-full p-3 bg-sandstone-gold text-black font-semibold rounded-lg shadow-lg transform transition-all duration-200 hover:bg-yellow-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-4"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span class="flex-grow text-left">Live Map & Bars</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+                <button data-target="food-page" class="page-link flex items-center w-full p-3 bg-sandstone-gold text-black font-semibold rounded-lg shadow-lg transform transition-all duration-200 hover:bg-yellow-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-4"><path d="M16 2a5 5 0 0 0-9 2.46L6 6h12l-1-1.54A5 5 0 0 0 16 2Z"/><path d="M6 6h12v3c0 2.2-1.8 4-4 4H10c-2.2 0-4-1.8-4-4V6Z"/><path d="M6 13h12l-2 8H8l-2-8Z"/></svg>
+                    <span class="flex-grow text-left">Food & Drink</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+                <button data-target="travel-page" class="page-link flex items-center w-full p-3 bg-sandstone-gold text-black font-semibold rounded-lg shadow-lg transform transition-all duration-200 hover:bg-yellow-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-4"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C20.7 7.6 16.3 4 11 4 6.8 4 3.7 6.1 2.4 9.1c-.3.8-.1 1.7.5 2.3.6.6 1.4.8 2.1.6 1.1-.3 2.5 0 3.8 1.1l1.6 1.6c.9.8 2.1 1.2 3.3 1.2h2.8c.6 0 1.1.4 1.2 1 .2 1.2-1 2.3-2.2 2.3H19Z"/><path d="M7 17a2 2 0 1 0-4 0 2 2 0 0 0 4 0Z"/><path d="M17 17a2 2 0 1 0-4 0 2 2 0 0 0 4 0Z"/></svg>
+                    <span class="flex-grow text-left">Travel & Transport</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+                 <button data-target="faq-page" class="page-link flex items-center w-full p-3 bg-sandstone-gold text-black font-semibold rounded-lg shadow-lg transform transition-all duration-200 hover:bg-yellow-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-4"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                    <span class="flex-grow text-left">Essential Info (FAQs)</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+                 <button data-target="updates-page" class="page-link flex items-center w-full p-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg transform transition-all duration-200 hover:bg-blue-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-4"><path d="M22 17H2a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2Z"/><path d="M18 17v-2.5"/><path d="M6 17v-2.5"/><path d="M12 17v-2.5"/></svg>
+                    <span class="flex-grow text-left">Latest Updates</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+                <button data-target="lightshow-page" class="page-link flex items-center w-full p-3 bg-purple-600 text-white font-semibold rounded-lg shadow-lg transform transition-all duration-200 hover:bg-purple-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-4"><path d="M12 2a3 3 0 0 0-3 3v4a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                    <span class="flex-grow text-left">Interactive Fan Light Show</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+                 <button data-target="safety-page" class="page-link flex items-center w-full p-3 bg-red-600 text-white font-semibold rounded-lg shadow-lg transform transition-all duration-200 hover:bg-red-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-4"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+                    <span class="flex-grow text-left">Help & Safety</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+            </div>
+             <div class="mt-4">
+                <button id="enable-notifications-btn" class="w-full p-2 bg-gray-700 text-sandstone-gold font-semibold rounded-lg shadow-lg hover:bg-gray-600 text-sm">Enable Live Updates</button>
+            </div>
+             <div class="mt-4">
+                <div id="google_translate_element"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- =========== CONTENT PAGES =========== -->
+    <template id="page-header-template">
+         <header class="content-page-header sticky top-0 z-10 p-4 grid grid-cols-[auto_1fr_auto] items-center gap-2">
+            <div class="flex justify-start items-center">
+                <button class="back-button p-2 rounded-full hover:bg-sandstone-gold/20 transition-transform active:scale-90 disabled:opacity-25">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-sandstone-gold"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                 <button class="forward-button p-2 rounded-full hover:bg-sandstone-gold/20 transition-transform active:scale-90 disabled:opacity-25">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-sandstone-gold"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-sandstone-gold text-center truncate" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.7);"></h2>
+            <div class="flex justify-end">
+                <img src="https://www.thepiecehall.co.uk/wp-content/uploads/2021/06/ThePieceHall_Logo_white.png" alt="The Piece Hall Logo" class="h-10 w-auto">
+            </div>
+        </header>
+    </template>
+    
+    <div id="schedule-page" class="page-section hidden bg-black min-h-screen"></div>
+    <div id="map-page" class="page-section hidden bg-black min-h-screen"></div>
+    <div id="faq-page" class="page-section hidden bg-black min-h-screen"></div>
+    <div id="updates-page" class="page-section hidden bg-black min-h-screen"></div>
+    <div id="lineup-page" class="page-section hidden bg-black min-h-screen"></div>
+    <div id="food-page" class="page-section hidden bg-black min-h-screen"></div>
+    <div id="travel-page" class="page-section hidden bg-black min-h-screen"></div>
+    <div id="lightshow-page" class="page-section hidden bg-black min-h-screen"></div>
+    <div id="safety-page" class="page-section hidden bg-black min-h-screen"></div>
+    <div id="search-page" class="page-section hidden bg-black min-h-screen"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const pageLinks = document.querySelectorAll('.page-link');
+        const pageSections = document.querySelectorAll('.page-section');
+        const dateElement = document.getElementById('current-date');
+        
+        let navigationHistory = ['hub-page'];
+        let historyIndex = 0;
+
+        // --- PWA & DYNAMIC CONTENT ---
+        const manifestData = {
+            "name": "Live at The Piece Hall", "short_name": "Live at TPH", "start_url": ".", "display": "standalone", "background_color": "#000000", "theme_color": "#000000",
+            "description": "Your official gig guide to Live at The Piece Hall, Halifax.",
+            "icons": [{"src": "https://raw.githubusercontent.com/leejoy82/welcome-to-the-piece-hall/main/icon-192.png", "sizes": "192x192", "type": "image/png" }, {"src": "https://raw.githubusercontent.com/leejoy82/welcome-to-the-piece-hall/main/icon-512.png", "sizes": "512x512", "type": "image/png" }]
+        };
+        const manifestString = JSON.stringify(manifestData);
+        const manifestBlob = new Blob([manifestString], { type: 'application/json' });
+        const manifestUrl = URL.createObjectURL(manifestBlob);
+        document.querySelector('#manifest').setAttribute('href', manifestUrl);
+        
+        function updateDateTime() {
+            const now = new Date();
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+            dateElement.textContent = `${now.toLocaleDateString('en-GB', dateOptions)} | ${now.toLocaleTimeString('en-US', timeOptions)}`;
+        }
+
+        function initializePushNotifications() {
+            const enableNotificationsButton = document.getElementById('enable-notifications-btn');
+            if ('serviceWorker' in navigator && 'PushManager' in window) {
+                enableNotificationsButton.addEventListener('click', () => {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === 'granted') {
+                            enableNotificationsButton.textContent = 'Live Updates Enabled';
+                            enableNotificationsButton.disabled = true;
+                        }
+                    });
+                });
+            } else {
+                enableNotificationsButton.style.display = 'none';
+            }
+        }
+
+        // --- NAVIGATION ---
+        function updateNavButtons() {
+            const allBackButtons = document.querySelectorAll('.back-button');
+            const allForwardButtons = document.querySelectorAll('.forward-button');
+            allBackButtons.forEach(btn => btn.disabled = (historyIndex <= 0));
+            allForwardButtons.forEach(btn => btn.disabled = (historyIndex >= navigationHistory.length - 1));
+        }
+        
+        function _showPageFromHistory() {
+            const targetId = navigationHistory[historyIndex];
+            pageSections.forEach(page => page.classList.toggle('hidden', page.id !== targetId));
+            window.scrollTo(0, 0);
+            updateNavButtons();
+        }
+
+        function showPage(targetId) {
+            if (targetId === navigationHistory[historyIndex]) return;
+
+            if (historyIndex < navigationHistory.length - 1) {
+                navigationHistory = navigationHistory.slice(0, historyIndex + 1);
+            }
+            
+            navigationHistory.push(targetId);
+            historyIndex = navigationHistory.length - 1;
+            
+            _showPageFromHistory();
+        }
+        
+        function goBack() {
+             if (historyIndex > 0) {
+                 historyIndex--;
+                 _showPageFromHistory();
+            }
+        }
+        
+        function goForward() {
+            if (historyIndex < navigationHistory.length - 1) {
+                historyIndex++;
+                _showPageFromHistory();
+            }
+        }
+
+        pageLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage(link.getAttribute('data-target'));
+            });
+        });
+
+        let touchStartX = 0;
+        document.body.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+        document.body.addEventListener('touchend', e => {
+            const currentTarget = document.querySelector('.page-section:not(.hidden)');
+            if (currentTarget && (currentTarget.id === 'hub-page' || currentTarget.id === 'lightshow-page')) return;
+            const touchEndX = e.changedTouches[0].screenX;
+            if (touchEndX > touchStartX + 75) { 
+                goBack();
+            } else if (touchEndX < touchStartX - 75) {
+                goForward();
+            }
+        });
+        
+        document.querySelectorAll('a[href^="http"]').forEach(link => {
+            link.setAttribute('target', '_blank');
+            link.setAttribute('rel', 'noopener noreferrer');
+        });
+
+        // --- PAGE INJECTIONS & SETUP ---
+        function createPageHeader(pageId, title) {
+            const page = document.getElementById(pageId);
+            if (!page || page.querySelector('.content-page-header')) return;
+            const template = document.getElementById('page-header-template');
+            const header = template.content.cloneNode(true);
+            header.querySelector('h2').textContent = title;
+            page.prepend(header);
+            page.querySelector('.back-button').addEventListener('click', goBack);
+            page.querySelector('.forward-button').addEventListener('click', goForward);
+        }
+        
+        const pageTitles = {
+            "schedule-page": "Tonight's Schedule", "map-page": "Live Map & Bars", "faq-page": "Essential Info",
+            "updates-page": "Latest Updates", "search-page": "Search Results", "lineup-page": "Artist & Line-up",
+            "food-page": "Food & Drink", "travel-page": "Travel & Transport", "lightshow-page": "Fan Light Show",
+            "safety-page": "Help & Safety"
+        };
+        
+        let allSearchableContent = [];
+
+        // --- PAGE CREATION FUNCTIONS ---
+        function createSchedulePage() {
+            const page = document.getElementById('schedule-page');
+            page.innerHTML = `
+                <main class="p-6 page-content max-w-2xl mx-auto">
+                    <div class="text-center mb-8">
+                        <h1 class="text-4xl text-sandstone-gold">Tonight's Schedule</h1>
+                        <p class="text-xl text-parchment/80 mt-2">IDLES - 5th July 2025</p>
+                        <p class="text-sm text-parchment/60">(All times are approximate and subject to change)</p>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="flex items-start"><div class="text-lg font-bold text-sandstone-gold w-24">17:00</div><div class="border-l-2 border-sandstone-gold pl-6 ml-4 flex-1"><h3 class="text-2xl mt-0">Gates Open</h3><p>Welcome! Find your spot, grab a drink, and get ready for the show.</p></div></div>
+                        <div class="flex items-start"><div class="text-lg font-bold text-sandstone-gold w-24">18:30</div><div class="border-l-2 border-sandstone-gold pl-6 ml-4 flex-1"><h3 class="text-2xl mt-0">Guest DJ: Steve Lamacq</h3><p>BBC 6 Music's legendary DJ will be warming things up with a special set.</p></div></div>
+                        <div class="flex items-start"><div class="text-lg font-bold text-sandstone-gold w-24">19:45</div><div class="border-l-2 border-sandstone-gold pl-6 ml-4 flex-1"><h3 class="text-2xl mt-0">Support: Jehnny Beth</h3><p>Don't miss a powerful performance from the Savages frontwoman.</p></div></div>
+                        <div class="flex items-start"><div class="text-lg font-bold text-sandstone-gold w-24">21:00</div><div class="border-l-2 border-sandstone-gold pl-6 ml-4 flex-1"><h3 class="text-2xl mt-0">HEADLINER: IDLES</h3><p>The main event. Get ready for an unforgettable set!</p></div></div>
+                        <div class="flex items-start"><div class="text-lg font-bold text-sandstone-gold w-24">22:30</div><div class="border-l-2 border-gray-600 pl-6 ml-4 flex-1"><h3 class="text-2xl mt-0">Curfew</h3><p>Show ends. Please leave the venue quietly. Thank you for coming!</p></div></div>
+                    </div>
+                </main>`;
+        }
+
+        function createMapPage() {
+            const page = document.getElementById('map-page');
+            page.innerHTML = `
+                 <div class="p-4 md:p-6 text-center">
+                     <h3 class="text-2xl font-bold text-sandstone-gold mb-4">Live Map</h3>
+                     <p class="text-parchment/70 mb-4">Find your way around the venue.</p>
+                    <svg id="interactive-map" viewBox="0 0 800 600" class="w-full max-w-4xl mx-auto bg-gray-900 rounded-lg border-2 border-sandstone-gold">
+                        <rect x="50" y="50" width="700" height="500" rx="15" fill="#333" stroke="#B3A369" stroke-width="2"/><rect x="150" y="150" width="500" height="300" fill="#222" />
+                        <g class="map-label" data-area="stage"><rect x="160" y="225" width="20" height="150" fill="#B3A369" /><text x="115" y="300" fill="#F5F5DC" text-anchor="middle" font-size="24" font-family="Montserrat" font-weight="bold" transform="rotate(-90, 115, 300)">STAGE</text></g>
+                        <g class="map-label" data-area="north-gate"><rect x="375" y="50" width="50" height="20" fill="coral" /><text x="400" y="100" fill="#F5F5DC" text-anchor="middle" font-size="18" font-family="Montserrat">ENTRY</text></g>
+                        <g class="map-label" data-area="south-gate"><rect x="375" y="530" width="50" height="20" fill="coral" /><text x="400" y="495" fill="#F5F5DC" text-anchor="middle" font-size="18" font-family="Montserrat">EXIT</text></g>
+                        <g class="map-label" data-area="toilets"><circle cx="620" cy="185" r="10" fill="lightblue" /><text x="560" y="190" fill="#F5F5DC" font-size="16" font-family="Montserrat">Toilets</text></g>
+                        <g class="map-label" data-area="merch"><circle cx="620" cy="420" r="10" fill="lightgreen" /><text x="560" y="425" fill="#F5F5DC" font-size="16" font-family="Montserrat">Merch</text></g>
+                        <g class="map-label" data-area="bar1"><circle cx="300" y="185" r="10" fill="orange" /><text x="340" y="190" fill="#F5F5DC" font-size="16" font-family="Montserrat">Bar 1</text></g>
+                        <g class="map-label" data-area="bar2"><circle cx="480" y="185" r="10" fill="orange" /><text x="520" y="190" fill="#F5F5DC" font-size="16" font-family="Montserrat">Bar 2</text></g>
+                        <g class="map-label" data-area="food"><circle cx="300" y="420" r="10" fill="yellow" /><text x="340" y="425" fill="#F5F5DC" font-size="16" font-family="Montserrat">Food</text></g>
+                        <g class="map-label" data-area="first-aid"><circle cx="185" y="185" r="10" fill="red" /><text x="225" y="190" fill="#F5F5DC" font-size="16" font-family="Montserrat">First Aid</text></g>
+                    </svg>
+                    <div class="mt-8 page-content max-w-3xl mx-auto text-left">
+                        <h3 class="text-2xl font-bold text-sandstone-gold">Facilities</h3>
+                        <ul class="list-disc list-inside space-y-2 text-lg">
+                            <li><strong class="text-sandstone-gold">Bars:</strong> Multiple bars are located around the courtyard serving a range of alcoholic and soft drinks.</li>
+                            <li><strong class="text-sandstone-gold">Food Stalls:</strong> A variety of street food vendors can be found at the south end of the courtyard.</li>
+                            <li><strong class="text-sandstone-gold">Toilets:</strong> Located on the Rustic and Colonnade levels.</li>
+                            <li><strong class="text-sandstone-gold">First Aid:</strong> A dedicated first aid point is located near the main stage. Please ask any member of staff for assistance.</li>
+                            <li><strong class="text-sandstone-gold">Merchandise:</strong> Official artist and venue merchandise is available at the merch stand.</li>
+                        </ul>
+                    </div>
+                </div>`;
+            const mapLabels = page.querySelectorAll('#interactive-map .map-label');
+            mapLabels.forEach(label => {
+                label.addEventListener('click', () => {
+                    mapLabels.forEach(l => { 
+                        l.style.opacity = '0.7';
+                        l.querySelector('text').style.fontWeight = 'normal';
+                    });
+                    label.style.opacity = '1';
+                    label.querySelector('text').style.fontWeight = 'bold';
+                });
+            });
+        }
+
+        const staticFAQs = [
+            { type: 'FAQ', q: 'What time should I arrive?', a: 'Gates open at 5pm. We advise arriving early to allow time for security checks. The first act will be on stage around 6:30pm.' },
+            { type: 'FAQ', q: 'Can I bring a bag?', a: 'Only small bags smaller than an A4 piece of paper are permitted. All bags will be searched on entry.' },
+            { type: 'FAQ', q: 'What items are prohibited?', a: 'You cannot bring your own food and drink, professional cameras, umbrellas, or chairs into the venue. See the main website for a full list.' },
+            { type: 'FAQ', q: 'Is there an age restriction?', a: 'Under 14s must be accompanied by an adult, and under 16s are not permitted in the standing area.' },
+            { type: 'FAQ', q: 'Is there parking available?', a: 'There is no dedicated parking for The Piece Hall. Please use town centre car parks and public transport where possible. Halifax train station is a 5-minute walk away.' },
+            { type: 'FAQ', q: 'Is the event cashless?', a: 'Yes, all bars, food outlets and merchandise stands are cashless. Card and contactless payments only.' }
+        ];
+        allSearchableContent.push(...staticFAQs);
+
+        function createFaqPage() {
+            const page = document.getElementById('faq-page');
+            let html = `
+                 <main class="p-6 page-content max-w-2xl mx-auto">
+                    <div class="text-center mb-8">
+                        <h1 class="text-4xl text-sandstone-gold">Essential Info</h1>
+                        <p class="text-xl text-parchment/80 mt-2">Everything you need to know for a great night.</p>
+                    </div>
+                    <div id="faq-content">`;
+            staticFAQs.forEach(item => {
+                html += `
+                    <div class="faq-item">
+                        <h4>${item.q}</h4>
+                        <p class="text-parchment/80 mt-2">${item.a}</p>
+                    </div>`;
+            });
+            html += `</div></main>`;
+            page.innerHTML = html;
+        }
+
+        const staticUpdates = [
+            { time: '17:05', update: 'GATES ARE OPEN! Welcome to Live at The Piece Hall. Bars are open and our guest DJ is starting soon.'},
+            { time: '16:30', update: 'Weather Update: It\'s a clear evening ahead! No rain forecast, but it might get chilly later so bring a jacket.'},
+            { time: '15:00', update: 'Stage times have been confirmed. IDLES will be on stage at 9pm sharp. Don\'t miss it!'},
+        ];
+
+        function createUpdatesPage() {
+            const page = document.getElementById('updates-page');
+            let content = `
+                <main class="p-6 page-content max-w-2xl mx-auto"><div class="space-y-6">`;
+            staticUpdates.forEach(item => {
+                 content += `
+                    <div class="bg-gray-900/50 border-l-4 border-blue-500 rounded-r-lg p-5">
+                        <p class="text-sm font-semibold text-sandstone-gold/80 mb-1">${item.time}</p>
+                        <p class="text-lg">${item.update}</p>
+                    </div>`;
+            });
+            content += '</div></main>';
+            page.innerHTML = content;
+        }
+        
+        const staticLineup = [
+            { type: 'Artist', name: 'IDLES', genre: 'Post-Punk', description: 'Bristol\'s sensational post-punk heroes, known for their visceral energy and politically charged lyrics.', spotify: 'https://open.spotify.com/artist/75mafsNqNE1WSE0KqAISup' },
+            { type: 'Artist', name: 'Jehnny Beth', genre: 'Art Rock', description: 'The incredible frontwoman of Savages, bringing her powerful solo performance to the Piece Hall courtyard.', spotify: 'https://open.spotify.com/artist/2b22i5JFtC3kbwZGYi44a2' },
+            { type: 'Artist', name: 'Steve Lamacq', genre: 'Guest DJ', description: 'The legendary BBC 6 Music DJ will be getting the evening started with an iconic set.', spotify: '#' }
+        ];
+        allSearchableContent.push(...staticLineup);
+
+        function createLineupPage() {
+            const page = document.getElementById('lineup-page');
+            let html = `
+                <main class="p-6 page-content max-w-2xl mx-auto">
+                    <div class="text-center mb-8">
+                        <h1 class="text-4xl text-sandstone-gold">Artist & Line-up</h1>
+                        <p class="text-xl text-parchment/80 mt-2">Discover tonight's performers.</p>
+                    </div>
+                    <div class="space-y-8">`;
+            staticLineup.forEach(artist => {
+                html += `
+                    <div class="bg-gray-900/50 border border-sandstone-gold rounded-lg p-6">
+                        <p class="text-sm font-semibold text-sandstone-gold">${artist.genre}</p>
+                        <h3 class="text-3xl mt-1 mb-2">${artist.name}</h3>
+                        <p class="text-parchment/80 mb-4">${artist.description}</p>
+                        <a href="${artist.spotify}" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-500 transition-colors duration-200">Listen on Spotify</a>
+                    </div>
+                `;
+            });
+            html += `</div></main>`;
+            page.innerHTML = html;
+        }
+
+        const staticFood = [
+            { type: 'Food', name: 'Burger Bros', item: 'Classic Burger', price: '£9.50' },
+            { type: 'Food', name: 'Burger Bros', item: 'Halloumi Burger', price: '£8.50' },
+            { type: 'Food', name: 'Main Bar', item: 'Pint of Lager', price: '£6.00' },
+            { type: 'Food', name: 'Main Bar', item: 'Glass of Wine', price: '£7.50' }
+        ];
+        allSearchableContent.push(...staticFood);
+
+        function createFoodPage() {
+            const page = document.getElementById('food-page');
+            page.innerHTML = `
+                <main class="p-6 page-content max-w-2xl mx-auto">
+                    <div class="text-center mb-8">
+                        <h1 class="text-4xl text-sandstone-gold">Food & Drink</h1>
+                        <p class="text-xl text-parchment/80 mt-2">All outlets are cashless.</p>
+                    </div>
+                    <div>
+                        <h3>Main Bar Menu</h3>
+                        <ul class="list-none space-y-2">
+                            <li class="flex justify-between border-b border-sandstone-gold/20 py-2"><span class="text-parchment/80">Pint of Lager/Cider</span><span class="font-bold">£6.00</span></li>
+                            <li class="flex justify-between border-b border-sandstone-gold/20 py-2"><span class="text-parchment/80">Spirit & Mixer</span><span class="font-bold">£7.00</span></li>
+                            <li class="flex justify-between border-b border-sandstone-gold/20 py-2"><span class="text-parchment/80">Glass of Wine (175ml)</span><span class="font-bold">£7.50</span></li>
+                            <li class="flex justify-between border-b border-sandstone-gold/20 py-2"><span class="text-parchment/80">Soft Drinks</span><span class="font-bold">£3.50</span></li>
+                        </ul>
+                        <h3 class="mt-8">Burger Bros</h3>
+                        <ul class="list-none space-y-2">
+                            <li class="flex justify-between border-b border-sandstone-gold/20 py-2"><span class="text-parchment/80">Classic Cheeseburger & Fries</span><span class="font-bold">£12.50</span></li>
+                            <li class="flex justify-between border-b border-sandstone-gold/20 py-2"><span class="text-parchment/80">Spicy Chicken Burger & Fries</span><span class="font-bold">£13.00</span></li>
+                            <li class="flex justify-between border-b border-sandstone-gold/20 py-2"><span class="text-parchment/80">Halloumi Burger & Fries (V)</span><span class="font-bold">£11.50</span></li>
+                        </ul>
+                    </div>
+                </main>`;
+        }
+
+        const staticTravel = [ { type: 'Travel', name: 'Taxi', info: 'A1 Taxis: 01422 340000' } ];
+        allSearchableContent.push(...staticTravel);
+        
+        function createTravelPage() {
+            const page = document.getElementById('travel-page');
+            page.innerHTML = `
+                 <main class="p-6 page-content max-w-2xl mx-auto">
+                    <div class="text-center mb-8">
+                        <h1 class="text-4xl text-sandstone-gold">Travel & Transport</h1>
+                        <p class="text-xl text-parchment/80 mt-2">Plan your journey home.</p>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="bg-gray-900/50 border border-sandstone-gold rounded-lg p-5">
+                            <h3 class="text-2xl mt-0">Taxis</h3>
+                            <p>Local taxi ranks are located outside the train station. Pre-booking is advised.</p>
+                            <p class="font-bold text-lg">A1 Taxis: <a href="tel:01422340000" class="text-sandstone-gold underline">01422 340000</a></p>
+                        </div>
+                        <div class="bg-gray-900/50 border border-sandstone-gold rounded-lg p-5">
+                            <h3 class="text-2xl mt-0">Trains</h3>
+                            <p>Halifax Station is a 5-minute walk from the venue. Check for last train times.</p>
+                            <a href="https://www.thetrainline.com/" target="_blank" rel="noopener noreferrer" class="inline-block mt-2 bg-sandstone-gold text-black font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-yellow-500">Check Live Departures</a>
+                        </div>
+                        <div class="bg-gray-900/50 border border-sandstone-gold rounded-lg p-5">
+                            <h3 class="text-2xl mt-0">Parking</h3>
+                            <p>There is no event parking. Use town centre car parks such as Woolshops or Broad Street Plaza.</p>
+                             <a href="https://www.google.com/maps/search/halifax+town+centre+car+parks" target="_blank" rel="noopener noreferrer" class="inline-block mt-2 bg-sandstone-gold text-black font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-yellow-500">View on Google Maps</a>
+                        </div>
+                    </div>
+                </main>`;
+        }
+
+        function createSafetyPage() {
+             const page = document.getElementById('safety-page');
+             page.innerHTML = `
+                <main class="p-6 page-content max-w-2xl mx-auto">
+                    <div class="text-center mb-8">
+                        <h1 class="text-4xl text-red-500">Help & Safety</h1>
+                        <p class="text-xl text-parchment/80 mt-2">Your safety is our priority. Here's how to get help.</p>
+                    </div>
+                     <div class="space-y-6">
+                        <div class="bg-red-900/30 border border-red-500 rounded-lg p-5 text-center">
+                            <h3 class="text-2xl mt-0">In an Emergency</h3>
+                            <p class="text-lg">If you need immediate assistance, please alert the nearest member of security or staff. They are all trained to help.</p>
+                        </div>
+                        <div class="bg-gray-900/50 border border-sandstone-gold rounded-lg p-5">
+                            <h3 class="text-2xl mt-0">First Aid</h3>
+                            <p>The First Aid point is located near the main stage (see map). Our medical team is available to help with any issues, big or small.</p>
+                        </div>
+                         <div class="bg-gray-900/50 border border-sandstone-gold rounded-lg p-5">
+                            <h3 class="text-2xl mt-0">Welfare & Ask for Angela</h3>
+                            <p>If you feel unsafe, unwell, or vulnerable, please approach any member of staff and 'Ask for Angela'. This is a code-phrase that will let us know you need help, and we will assist you discreetly.</p>
+                        </div>
+                    </div>
+                </main>`;
+        }
+
+        function initializeLightShow() {
+            const page = document.getElementById('lightshow-page');
+            page.innerHTML = `
+                <main class="p-6 flex flex-col items-center justify-center h-full text-center">
+                    <h1 class="text-4xl text-sandstone-gold">Fan Light Show</h1>
+                    <p class="text-xl text-parchment/80 mt-2 mb-8">Get ready to be part of the show! When instructed, tap the button below.</p>
+                    <button id="start-lightshow-btn" class="p-6 bg-purple-600 text-white font-bold text-2xl rounded-full shadow-lg transform transition-all duration-200 hover:bg-purple-500">Start Light Show</button>
+                </main>
+            `;
+            
+            let lightInterval;
+            const startBtn = page.querySelector('#start-lightshow-btn');
+
+            startBtn.addEventListener('click', () => {
+                const container = document.createElement('div');
+                container.id = 'light-show-container';
+                container.innerHTML = `<p class="text-black text-2xl font-bold text-center animate-pulse">Tap Screen to Stop</p>`;
+                document.body.appendChild(container);
+
+                const colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'];
+                let currentIndex = 0;
+                
+                const changeColor = () => {
+                    container.style.backgroundColor = colors[currentIndex];
+                    currentIndex = (currentIndex + 1) % colors.length;
+                };
+                
+                changeColor();
+                lightInterval = setInterval(changeColor, 1000);
+
+                container.addEventListener('click', () => {
+                    clearInterval(lightInterval);
+                    document.body.removeChild(container);
+                }, { once: true });
+            });
+        }
+        
+        // --- SEARCH LOGIC ---
+        const searchForm = document.getElementById('search-form');
+        const searchInput = document.getElementById('search-input');
+        
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            if (query) {
+                displaySearchResults(query);
+                showPage('search-page');
+            }
+        });
+        
+        function displaySearchResults(query) {
+            const page = document.getElementById('search-page');
+            const lowerCaseQuery = query.toLowerCase();
+            let resultsHtml = `<main class="p-6"><h2 class="text-3xl font-bold text-sandstone-gold mb-6">Results for "${query}"</h2>`;
+            
+            const localResults = allSearchableContent.filter(item => 
+                (item.q && item.q.toLowerCase().includes(lowerCaseQuery)) ||
+                (item.a && item.a.toLowerCase().includes(lowerCaseQuery)) ||
+                (item.name && item.name.toLowerCase().includes(lowerCaseQuery)) ||
+                (item.description && item.description.toLowerCase().includes(lowerCaseQuery)) ||
+                (item.item && item.item.toLowerCase().includes(lowerCaseQuery))
+            );
+            
+            if (localResults.length > 0) {
+                resultsHtml += '<div class="space-y-4">';
+                localResults.forEach(item => {
+                    resultsHtml += `
+                        <div class="bg-gray-900/50 border border-sandstone-gold rounded-lg p-5">
+                            <h4 class="text-xl font-bold text-sandstone-gold">${item.q || item.name}</h4>
+                            <p class="text-parchment/80 mt-2">${item.a || item.description || item.info || ''}</p>
+                        </div>
+                    `;
+                });
+                resultsHtml += '</div>';
+            } else {
+                resultsHtml += `<p class="text-center text-lg text-parchment/80">No results found for "${query}" in the guide.</p>`;
+            }
+            resultsHtml += '</main>';
+            page.innerHTML = resultsHtml;
+            createPageHeader('search-page', 'Search Results');
+            updateNavButtons();
+        }
+
+        // --- INITIALIZATION ---
+        function initializeContent() {
+           createSchedulePage();
+           createMapPage();
+           createFaqPage();
+           createUpdatesPage();
+           createLineupPage();
+           createFoodPage();
+           createTravelPage();
+           createSafetyPage();
+           initializeLightShow();
+           // Now that all innerHTML is set, create the headers
+           for(const [id, title] of Object.entries(pageTitles)) {
+                createPageHeader(id, title);
+           }
+           updateNavButtons();
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 60000);
+        initializePushNotifications();
+        initializeContent();
+    });
+
+    // --- GOOGLE TRANSLATE ---
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+</script>
+</body>
+</html>
+
+
+
+
