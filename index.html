@@ -116,6 +116,17 @@
             align-items: center;
             justify-content: center;
         }
+        /* Cart styling */
+        #cart-summary {
+            position: sticky;
+            bottom: 0;
+            background-color: #1a1a1a;
+            border-top: 2px solid #B3A369;
+        }
+        .quantity-btn {
+             width: 30px;
+             height: 30px;
+        }
     </style>
 </head>
 <body class="text-parchment" style="overflow-x: hidden;">
@@ -137,6 +148,11 @@
             </div>
             
             <div class="space-y-3">
+                 <button data-target="order-page" class="page-link flex items-center w-full p-3 bg-green-600 text-white font-semibold rounded-lg shadow-lg transform transition-all duration-200 hover:bg-green-500 animate-pulse">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-4"><path d="M16 2a5 5 0 0 0-9 2.46L6 6h12l-1-1.54A5 5 0 0 0 16 2Z"/><path d="M6 6h12v3c0 2.2-1.8 4-4 4H10c-2.2 0-4-1.8-4-4V6Z"/><path d="M6 13h12l-2 8H8l-2-8Z"/></svg>
+                    <span class="flex-grow text-left">Order Food & Drink (Skip the Line!)</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
                  <button data-target="schedule-page" class="page-link flex items-center w-full p-3 bg-sandstone-gold text-black font-semibold rounded-lg shadow-lg transform transition-all duration-200 hover:bg-yellow-500">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-4"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                     <span class="flex-grow text-left">Tonight's Schedule</span>
@@ -152,9 +168,9 @@
                     <span class="flex-grow text-left">Live Map & Bars</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m9 18 6-6-6-6"/></svg>
                 </button>
-                <button data-target="food-page" class="page-link flex items-center w-full p-3 bg-sandstone-gold text-black font-semibold rounded-lg shadow-lg transform transition-all duration-200 hover:bg-yellow-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-4"><path d="M16 2a5 5 0 0 0-9 2.46L6 6h12l-1-1.54A5 5 0 0 0 16 2Z"/><path d="M6 6h12v3c0 2.2-1.8 4-4 4H10c-2.2 0-4-1.8-4-4V6Z"/><path d="M6 13h12l-2 8H8l-2-8Z"/></svg>
-                    <span class="flex-grow text-left">Food & Drink</span>
+                <button data-target="tickets-page" class="page-link flex items-center w-full p-3 bg-sandstone-gold text-black font-semibold rounded-lg shadow-lg transform transition-all duration-200 hover:bg-yellow-500">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-4"><path d="M2 9a3 3 0 0 1 0 6v1a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-1a3 3 0 0 1 0-6V8a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>
+                    <span class="flex-grow text-left">Ticket Upgrades & Presales</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m9 18 6-6-6-6"/></svg>
                 </button>
                 <button data-target="travel-page" class="page-link flex items-center w-full p-3 bg-sandstone-gold text-black font-semibold rounded-lg shadow-lg transform transition-all duration-200 hover:bg-yellow-500">
@@ -182,12 +198,20 @@
                     <span class="flex-grow text-left">Help & Safety</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m9 18 6-6-6-6"/></svg>
                 </button>
+                <button id="install-pwa-btn" class="hidden page-link flex items-center w-full p-3 bg-teal-600 text-white font-semibold rounded-lg shadow-lg transform transition-all duration-200 hover:bg-teal-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-4"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                    <span class="flex-grow text-left">Add to Home Screen</span>
+                </button>
             </div>
              <div class="mt-4">
                 <button id="enable-notifications-btn" class="w-full p-2 bg-gray-700 text-sandstone-gold font-semibold rounded-lg shadow-lg hover:bg-gray-600 text-sm">Enable Live Updates</button>
             </div>
              <div class="mt-4">
                 <div id="google_translate_element"></div>
+            </div>
+             <div class="mt-6 text-center border-t border-sandstone-gold/20 pt-4">
+                <p class="text-sm text-sandstone-gold/80 font-bold">Official After-Party Spot</p>
+                <a href="#" class="text-lg text-parchment hover:underline">The Grayston Unity - 5 mins walk</a>
             </div>
         </div>
     </main>
@@ -215,11 +239,12 @@
     <div id="faq-page" class="page-section hidden bg-black min-h-screen"></div>
     <div id="updates-page" class="page-section hidden bg-black min-h-screen"></div>
     <div id="lineup-page" class="page-section hidden bg-black min-h-screen"></div>
-    <div id="food-page" class="page-section hidden bg-black min-h-screen"></div>
     <div id="travel-page" class="page-section hidden bg-black min-h-screen"></div>
     <div id="lightshow-page" class="page-section hidden bg-black min-h-screen"></div>
     <div id="safety-page" class="page-section hidden bg-black min-h-screen"></div>
     <div id="search-page" class="page-section hidden bg-black min-h-screen"></div>
+    <div id="order-page" class="page-section hidden bg-black min-h-screen"></div>
+    <div id="tickets-page" class="page-section hidden bg-black min-h-screen"></div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -229,6 +254,32 @@
         
         let navigationHistory = ['hub-page'];
         let historyIndex = 0;
+
+        let deferredPrompt;
+        const installPwaBtn = document.getElementById('install-pwa-btn');
+        installPwaBtn.classList.add('hidden'); // Ensure it's hidden initially
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (window.matchMedia('(display-mode: standalone)').matches === false) {
+                 installPwaBtn.classList.remove('hidden');
+            }
+        });
+
+        installPwaBtn.addEventListener('click', async () => {
+            installPwaBtn.classList.add('hidden');
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+            }
+        });
+
+        window.addEventListener('appinstalled', () => {
+            installPwaBtn.classList.add('hidden');
+            deferredPrompt = null;
+        });
 
         // --- PWA & DYNAMIC CONTENT ---
         const manifestData = {
@@ -347,7 +398,7 @@
             "schedule-page": "Tonight's Schedule", "map-page": "Live Map & Bars", "faq-page": "Essential Info",
             "updates-page": "Latest Updates", "search-page": "Search Results", "lineup-page": "Artist & Line-up",
             "food-page": "Food & Drink", "travel-page": "Travel & Transport", "lightshow-page": "Fan Light Show",
-            "safety-page": "Help & Safety"
+            "safety-page": "Help & Safety", "order-page": "Order Food & Drink", "tickets-page": "Tickets & Upgrades"
         };
         
         let allSearchableContent = [];
@@ -502,35 +553,6 @@
             { type: 'Food', name: 'Main Bar', item: 'Glass of Wine', price: '£7.50' }
         ];
         allSearchableContent.push(...staticFood);
-
-        function createFoodPage() {
-            const page = document.getElementById('food-page');
-            page.innerHTML = `
-                <main class="p-6 page-content max-w-2xl mx-auto">
-                    <div class="text-center mb-8">
-                        <h1 class="text-4xl text-sandstone-gold">Food & Drink</h1>
-                        <p class="text-xl text-parchment/80 mt-2">All outlets are cashless.</p>
-                    </div>
-                    <div>
-                        <h3>Main Bar Menu</h3>
-                        <ul class="list-none space-y-2">
-                            <li class="flex justify-between border-b border-sandstone-gold/20 py-2"><span class="text-parchment/80">Pint of Lager/Cider</span><span class="font-bold">£6.00</span></li>
-                            <li class="flex justify-between border-b border-sandstone-gold/20 py-2"><span class="text-parchment/80">Spirit & Mixer</span><span class="font-bold">£7.00</span></li>
-                            <li class="flex justify-between border-b border-sandstone-gold/20 py-2"><span class="text-parchment/80">Glass of Wine (175ml)</span><span class="font-bold">£7.50</span></li>
-                            <li class="flex justify-between border-b border-sandstone-gold/20 py-2"><span class="text-parchment/80">Soft Drinks</span><span class="font-bold">£3.50</span></li>
-                        </ul>
-                        <h3 class="mt-8">Burger Bros</h3>
-                        <ul class="list-none space-y-2">
-                            <li class="flex justify-between border-b border-sandstone-gold/20 py-2"><span class="text-parchment/80">Classic Cheeseburger & Fries</span><span class="font-bold">£12.50</span></li>
-                            <li class="flex justify-between border-b border-sandstone-gold/20 py-2"><span class="text-parchment/80">Spicy Chicken Burger & Fries</span><span class="font-bold">£13.00</span></li>
-                            <li class="flex justify-between border-b border-sandstone-gold/20 py-2"><span class="text-parchment/80">Halloumi Burger & Fries (V)</span><span class="font-bold">£11.50</span></li>
-                        </ul>
-                    </div>
-                </main>`;
-        }
-
-        const staticTravel = [ { type: 'Travel', name: 'Taxi', info: 'A1 Taxis: 01422 340000' } ];
-        allSearchableContent.push(...staticTravel);
         
         function createTravelPage() {
             const page = document.getElementById('travel-page');
@@ -541,9 +563,9 @@
                         <p class="text-xl text-parchment/80 mt-2">Plan your journey home.</p>
                     </div>
                     <div class="space-y-6">
-                        <div class="bg-gray-900/50 border border-sandstone-gold rounded-lg p-5">
-                            <h3 class="text-2xl mt-0">Taxis</h3>
-                            <p>Local taxi ranks are located outside the train station. Pre-booking is advised.</p>
+                         <div class="bg-yellow-900/30 border border-yellow-500 rounded-lg p-5">
+                            <h3 class="text-2xl mt-0 text-yellow-400">Official Transport Partner</h3>
+                            <p>Get home safe with our trusted taxi partner.</p>
                             <p class="font-bold text-lg">A1 Taxis: <a href="tel:01422340000" class="text-sandstone-gold underline">01422 340000</a></p>
                         </div>
                         <div class="bg-gray-900/50 border border-sandstone-gold rounded-lg p-5">
@@ -622,6 +644,153 @@
             });
         }
         
+        function createTicketsPage() {
+            const page = document.getElementById('tickets-page');
+            page.innerHTML = `
+                <main class="p-6 page-content max-w-2xl mx-auto">
+                    <div class="text-center mb-8">
+                        <h1 class="text-4xl text-sandstone-gold">Tickets & Upgrades</h1>
+                        <p class="text-xl text-parchment/80 mt-2">Get exclusive access and offers.</p>
+                    </div>
+                    <div class="space-y-8">
+                        <div class="bg-gray-900/50 border border-sandstone-gold rounded-lg p-6">
+                            <h3 class="text-2xl mt-0">Last-Minute VIP Upgrade</h3>
+                            <p class="text-parchment/80 mb-4">A limited number of VIP balcony upgrades are available for tonight's show. Enjoy a private bar and premium view.</p>
+                            <a href="#" class="inline-block bg-sandstone-gold text-black font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-yellow-500">Check Availability (£25)</a>
+                        </div>
+                        <div class="bg-gray-900/50 border border-sandstone-gold rounded-lg p-6">
+                            <h3 class="text-2xl mt-0">2026 Presale Access</h3>
+                            <p class="text-parchment/80 mb-4">Be the first to hear about next summer's lineup. App users get exclusive 24-hour presale access before general sale.</p>
+                            <a href="#" class="inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-500">Sign Up for Alerts</a>
+                        </div>
+                    </div>
+                </main>
+            `;
+        }
+
+        // --- ORDERING PAGE ---
+        const menuData = {
+            "Main Bar": [
+                { id: "lager", name: "Pint of Lager/Cider", price: 6.00 },
+                { id: "spirit", name: "Spirit & Mixer", price: 7.00 },
+                { id: "wine", name: "Glass of Wine (175ml)", price: 7.50 },
+                { id: "soft", name: "Soft Drinks", price: 3.50 }
+            ],
+            "Burger Bros": [
+                { id: "cheese", name: "Classic Cheeseburger & Fries", price: 12.50 },
+                { id: "chicken", name: "Spicy Chicken Burger & Fries", price: 13.00 },
+                { id: "halloumi", name: "Halloumi Burger & Fries (V)", price: 11.50 }
+            ]
+        };
+        let cart = {};
+
+        function createOrderPage() {
+            const page = document.getElementById('order-page');
+            let menuHtml = `<div id="order-content" class="pb-24">`;
+            for (const vendor in menuData) {
+                menuHtml += `<h3 class="p-4 text-2xl">${vendor}</h3>`;
+                menuData[vendor].forEach(item => {
+                    menuHtml += `
+                        <div class="flex items-center justify-between p-4 border-b border-gray-700">
+                            <div>
+                                <p class="font-bold">${item.name}</p>
+                                <p class="text-sandstone-gold">£${item.price.toFixed(2)}</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button class="quantity-btn bg-gray-700 rounded-full text-lg" onclick="updateQuantity('${item.id}', -1)">-</button>
+                                <span id="qty-${item.id}" class="w-8 text-center font-bold">0</span>
+                                <button class="quantity-btn bg-sandstone-gold text-black rounded-full text-lg" onclick="updateQuantity('${item.id}', 1)">+</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            menuHtml += `</div>
+                <div id="cart-summary" class="p-4">
+                     <p class="text-center text-lg" id="cart-total">Cart is empty</p>
+                     <button id="place-order-btn" class="w-full mt-2 p-3 bg-green-600 text-white font-bold rounded-lg hidden">Place Order & Pay</button>
+                </div>
+                <div id="order-confirmation" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+                    <div class="bg-gray-800 p-8 rounded-lg text-center max-w-sm">
+                        <h3 class="text-3xl text-green-400">Order Confirmed!</h3>
+                        <p class="text-lg mt-2">Your order number is:</p>
+                        <p id="order-number" class="text-5xl font-bold my-4 text-sandstone-gold">#12345</p>
+                        <p>Please head to the 'App Orders' collection point at the Main Bar.</p>
+                        <button onclick="document.getElementById('order-confirmation').classList.add('hidden')" class="mt-6 w-full p-2 bg-sandstone-gold text-black font-bold rounded-lg">Close</button>
+                    </div>
+                </div>
+            `;
+            page.innerHTML = `<main class="page-content max-w-2xl mx-auto">${menuHtml}</main>`;
+
+            page.querySelector('#place-order-btn').addEventListener('click', handlePlaceOrder);
+        }
+
+        window.updateQuantity = (itemId, change) => {
+            cart[itemId] = (cart[itemId] || 0) + change;
+            if (cart[itemId] < 0) cart[itemId] = 0;
+            if (cart[itemId] === 0) delete cart[itemId];
+            document.getElementById(`qty-${itemId}`).textContent = cart[itemId] || 0;
+            renderCart();
+        }
+
+        function renderCart() {
+            let total = 0;
+            let itemCount = 0;
+            for (const vendor in menuData) {
+                menuData[vendor].forEach(item => {
+                    if (cart[item.id]) {
+                        total += cart[item.id] * item.price;
+                        itemCount += cart[item.id];
+                    }
+                });
+            }
+            
+            const totalEl = document.getElementById('cart-total');
+            const orderBtn = document.getElementById('place-order-btn');
+            if (itemCount > 0) {
+                totalEl.textContent = `Total (${itemCount} items): £${total.toFixed(2)}`;
+                orderBtn.classList.remove('hidden');
+            } else {
+                totalEl.textContent = `Cart is empty`;
+                orderBtn.classList.add('hidden');
+            }
+        }
+
+        async function handlePlaceOrder() {
+            let total = 0;
+            for (const vendor in menuData) {
+                menuData[vendor].forEach(item => {
+                    if (cart[item.id]) total += cart[item.id] * item.price;
+                });
+            }
+
+            if (total === 0) return;
+
+            const supportedPaymentMethods = [ { supportedMethods: 'https://google.com/pay', data: { /* ... */ } }, { supportedMethods: 'https://apple.com/apple-pay', data: { /* ... */ } } ];
+            const paymentDetails = {
+                total: { label: 'Live at TPH Order', amount: { currency: 'GBP', value: total.toFixed(2) } }
+            };
+
+            try {
+                const request = new PaymentRequest(supportedPaymentMethods, paymentDetails);
+                const canPay = await request.canMakePayment();
+                if(canPay){
+                    const response = await request.show();
+                    await response.complete('success');
+                }
+                // Simulate success regardless for demo purposes
+                document.getElementById('order-number').textContent = `#${Math.floor(10000 + Math.random() * 90000)}`;
+                document.getElementById('order-confirmation').classList.remove('hidden');
+                // Reset cart
+                cart = {};
+                document.querySelectorAll('[id^=qty-]').forEach(el => el.textContent = '0');
+                renderCart();
+            } catch (e) {
+                console.warn("Payment failed or cancelled:", e);
+                 alert("Payment failed or was cancelled.");
+            }
+        }
+        
         // --- SEARCH LOGIC ---
         const searchForm = document.getElementById('search-form');
         const searchInput = document.getElementById('search-input');
@@ -653,7 +822,7 @@
                 localResults.forEach(item => {
                     resultsHtml += `
                         <div class="bg-gray-900/50 border border-sandstone-gold rounded-lg p-5">
-                            <h4 class="text-xl font-bold text-sandstone-gold">${item.q || item.name}</h4>
+                            <h4 class="text-xl font-bold text-sandstone-gold">${item.q || item.name || item.item}</h4>
                             <p class="text-parchment/80 mt-2">${item.a || item.description || item.info || ''}</p>
                         </div>
                     `;
@@ -675,10 +844,12 @@
            createFaqPage();
            createUpdatesPage();
            createLineupPage();
-           createFoodPage();
            createTravelPage();
            createSafetyPage();
            initializeLightShow();
+           createTicketsPage();
+           createOrderPage();
+           
            // Now that all innerHTML is set, create the headers
            for(const [id, title] of Object.entries(pageTitles)) {
                 createPageHeader(id, title);
@@ -703,8 +874,4 @@
 </script>
 </body>
 </html>
-
-
-
-
 
